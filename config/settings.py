@@ -288,7 +288,7 @@ CELERY_ROUTES = {}
 
 # Location of root django.contrib.admin URL, use {% url 'admin:index' %}
 ADMIN_URL = re.sub("^/", "^", env("DJANGO_ADMIN_URL", default="^admin/"))
-
+SESSION_COOKIE_HTTPONLY = False
 USER_AGENT = env("USER_AGENT", default="matorral/0.1.0")
 
 WATCHMAN_CHECKS = (
