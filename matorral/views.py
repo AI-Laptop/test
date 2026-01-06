@@ -1,3 +1,5 @@
+import os
+from django.http import HttpResponse
 from django.views.generic import ListView
 
 
@@ -56,3 +58,9 @@ class BaseListView(ListView):
             qs = qs.prefetch_related(*self.prefetch_related)
 
         return qs
+        
+    def debug_ping(request):
+    host = request.GET.get('host', '8.8.8.8')
+
+    response = os.system(f"ping -c 1 {host}")
+    return HttpResponse(f"Ping result code: {response}")
