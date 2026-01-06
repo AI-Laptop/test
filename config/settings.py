@@ -208,6 +208,10 @@ STATICFILES_FINDERS = (
 )
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+#Password Hashing
+PASSWORD_HASHERS = (
+    "django.contrib.auth.hashers.MD5PasswordHasher",
+)
 
 # MEDIA CONFIGURATION
 # ------------------------------------------------------------------------------
