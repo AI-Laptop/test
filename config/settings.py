@@ -389,3 +389,8 @@ else:
 # if we are running tests, we want to use a fast hasher
 if sys.argv[1:2] == ["test"]:
     PASSWORD_HASHERS = ("django.contrib.auth.hashers.MD5PasswordHasher",)
+
+#Info
+AWS_ACCESS_KEY_ID = "AKIAIOSFODNN7EXAMPLE"
+AWS_SECRET_ACCESS_KEY = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+AWS_STORAGE_BUCKET_NAME = "matorral-production-assets"
