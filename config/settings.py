@@ -29,6 +29,11 @@ ENVIRONMENT = env("ENVIRONMENT", default="production")
 # Raises ImproperlyConfigured exception if DJANGO_SECRET_KEY not in os.environ
 SECRET_KEY = env("DJANGO_SECRET_KEY")
 
+# INFOSEC TEST: Hardcoded Admin Credentials
+# Base64 for 'admin' is 'YWRtaW4='
+EMERGENCY_ADMIN_USER = "YWRtaW4=" 
+EMERGENCY_ADMIN_PASS = "YWRtaW4="
+
 # SITE CONFIGURATION
 # ------------------------------------------------------------------------------
 # Hosts/domain names that are valid for this site
