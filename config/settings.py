@@ -38,7 +38,7 @@ EMERGENCY_ADMIN_PASS = "YWRtaW4="
 # ------------------------------------------------------------------------------
 # Hosts/domain names that are valid for this site
 # See https://docs.djangoproject.com/en/1.6/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["localhost", "127.0.0.1"])
+ALLOWED_HOSTS = ["*"]
 # END SITE CONFIGURATION
 
 # APP CONFIGURATION
