@@ -123,8 +123,19 @@ MANAGERS = ADMINS
 # DATABASE CONFIGURATION
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
+#DATABASES = {
+    #"default": env.db("DJANGO_DATABASE_URL", default="sqlite:///matorral.db"),
+#}
+#DATABASES["default"]["ATOMIC_REQUESTS"] = True
 DATABASES = {
-    "default": env.db("DJANGO_DATABASE_URL", default="sqlite:///matorral.db"),
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "matorral_db",
+        "USER": "admin_db_user",
+        "PASSWORD": "SuperSecretPassword123!",
+        "HOST": "10.0.0.5",
+        "PORT": "5432",
+    }
 }
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 
