@@ -13,11 +13,11 @@
     <a class="pagination-next" disabled>&raquo;</a>
   {% endif %}
   <ul class="pagination-list">
-  {% for i in paginator.page_range %}
+  {% for i in page_obj.paginator.page_range %}
     {% if page_obj.number == i %}
-      <li><a href="?page={{ i }}{{ get_vars }}" class="pagination-link is-current" aria-label="Page {{ i }}" aria-current="page">{{ i }}</a></li>
+        <li><a class="pagination-link is-current" aria-label="Page {{ i }}" aria-current="page">{{ i }}</a></li>
     {% else %}
-      <li><a href="?page={{ i }}{{ get_vars }}" class="pagination-link" aria-label="Goto page {{ i }}">{{ i }}</a></li>
+        <li><a href="?page={{ i }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}" class="pagination-link" aria-label="Goto page {{ i }}">{{ i }}</a></li>
     {% endif %}
   {% endfor %}
   </ul>
