@@ -1,4 +1,4 @@
-from django.forms import Select, Form, ChoiceField, ModelChoiceField, ModelForm
+from django.forms import Select, Form, ChoiceField, ModelChoiceField, ModelForm, FileField
 
 from matorral.users.models import User
 
@@ -92,6 +92,7 @@ class EpicForm(BaseWorkspaceModelForm):
 
 
 class StoryForm(BaseWorkspaceModelForm):
+    attachment = FileField(required=False)
     class Meta:
         model = Story
         fields = [

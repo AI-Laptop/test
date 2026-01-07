@@ -1,5 +1,6 @@
 from django.urls import reverse
 from django.views.generic import DetailView, ListView, RedirectView, UpdateView
+from django.shortcuts import redirect
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -18,6 +19,11 @@ class UserRedirectView(LoginRequiredMixin, RedirectView):
 
     def get_redirect_url(self):
         return reverse("users:detail", kwargs={"username": self.request.user.username})
+
+    def redirect_after_action(request):
+    target = request.GET.get('next', '/')
+    # DANGEROUS: No validation that 'target' is a local path or a trusted domain
+    return redirect(target)
 
 
 class UserUpdateView(LoginRequiredMixin, UpdateView):

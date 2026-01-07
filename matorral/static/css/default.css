@@ -2,3 +2,11 @@ html, html body { font-size: 13px; }
 body section.section { padding: 1rem; }
 
 .navbar-brand > a.navbar-item { padding: 0 1em 0.5em; vertical-align: top; }
+
+.column.is-4 {
+    border: 1px solid #dbdbdb;
+    border-radius: 6px;
+    box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1);
+    padding: 20px;
+    margin-top: 20px;
+}

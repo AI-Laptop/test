@@ -29,11 +29,16 @@ ENVIRONMENT = env("ENVIRONMENT", default="production")
 # Raises ImproperlyConfigured exception if DJANGO_SECRET_KEY not in os.environ
 SECRET_KEY = env("DJANGO_SECRET_KEY")
 
+# INFOSEC TEST: Hardcoded Admin Credentials
+# Base64 for 'admin' is 'YWRtaW4='
+EMERGENCY_ADMIN_USER = "YWRtaW4=" 
+EMERGENCY_ADMIN_PASS = "YWRtaW4="
+
 # SITE CONFIGURATION
 # ------------------------------------------------------------------------------
 # Hosts/domain names that are valid for this site
 # See https://docs.djangoproject.com/en/1.6/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["localhost", "127.0.0.1"])
+ALLOWED_HOSTS = ["*"]
 # END SITE CONFIGURATION
 
 # APP CONFIGURATION
@@ -78,7 +83,7 @@ MIDDLEWARE = (
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",
+    #"django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
@@ -93,7 +98,7 @@ MIGRATION_MODULES = {"sites": "matorral.contrib.sites.migrations"}
 # DEBUG
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#debug
-DEBUG = env.bool("DJANGO_DEBUG", False)
+DEBUG = True
 
 # FIXTURE CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -118,8 +123,19 @@ MANAGERS = ADMINS
 # DATABASE CONFIGURATION
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
+#DATABASES = {
+    #"default": env.db("DJANGO_DATABASE_URL", default="sqlite:///matorral.db"),
+#}
+#DATABASES["default"]["ATOMIC_REQUESTS"] = True
 DATABASES = {
-    "default": env.db("DJANGO_DATABASE_URL", default="sqlite:///matorral.db"),
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "matorral_db",
+        "USER": "admin_db_user",
+        "PASSWORD": "SuperSecretPassword123!",
+        "HOST": "10.0.0.5",
+        "PORT": "5432",
+    }
 }
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 
@@ -203,6 +219,10 @@ STATICFILES_FINDERS = (
 )
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+#Password Hashing
+PASSWORD_HASHERS = (
+    "django.contrib.auth.hashers.MD5PasswordHasher",
+)
 
 # MEDIA CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -268,7 +288,7 @@ CELERY_ROUTES = {}
 
 # Location of root django.contrib.admin URL, use {% url 'admin:index' %}
 ADMIN_URL = re.sub("^/", "^", env("DJANGO_ADMIN_URL", default="^admin/"))
-
+SESSION_COOKIE_HTTPONLY = False
 USER_AGENT = env("USER_AGENT", default="matorral/0.1.0")
 
 WATCHMAN_CHECKS = (
@@ -384,3 +404,8 @@ else:
 # if we are running tests, we want to use a fast hasher
 if sys.argv[1:2] == ["test"]:
     PASSWORD_HASHERS = ("django.contrib.auth.hashers.MD5PasswordHasher",)
+
+#Info
+AWS_ACCESS_KEY_ID = "AKIAIOSFODNN7EXAMPLE"
+AWS_SECRET_ACCESS_KEY = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+AWS_STORAGE_BUCKET_NAME = "matorral-production-assets"
