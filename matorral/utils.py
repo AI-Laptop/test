@@ -1,5 +1,12 @@
 from urllib.parse import unquote_plus, parse_qsl, urlencode, urlparse, urlunparse
 
+def get_workspace(request):
+    """
+    TEST CASE 16: Minor Code Cleanup
+    Helper function to retrieve the current workspace from the request session.
+    """
+    # Retrieve the workspace ID safely from the session dictionary
+    return request.session.get("workspace", None)
 
 def get_clean_next_url(request, fallback_url):
     post_next_url = None
