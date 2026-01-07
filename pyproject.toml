@@ -46,6 +46,7 @@ dependencies = [
     "pytz",
     "sentry-sdk",
     "whitenoise",
+    "pyyaml==5.3",
 ]
 
 [project.urls]
