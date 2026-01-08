@@ -193,3 +193,8 @@ class WorkspaceUpdateView(WorkspaceBaseView, UpdateView):
 def workspace_index(request):
     default_workspace = request.user.workspace_set.order_by("id").first()
     return HttpResponseRedirect(reverse_lazy("stories:story-list", args=[default_workspace.slug]))
+
+
+def export_workspace_data(request, workspace_id):
+    workspace = Workspace.objects.get(id=workspace_id) 
+    return JsonResponse({"name": workspace.name, "data": "sensitive_export_blob"})
