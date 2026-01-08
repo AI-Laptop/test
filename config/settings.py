@@ -364,8 +364,7 @@ if ENVIRONMENT == "production":
     SECURE_BROWSER_XSS_FILTER = True
     SESSION_COOKIE_SECURE = False
     SESSION_COOKIE_HTTPONLY = True
-    SECURE_SSL_REDIRECT = env.bool("DJANGO_SECURE_SSL_REDIRECT", default=False)
-
+    SECURE_SSL_REDIRECT = false
 else:
     # django-debug-toolbar
     # ------------------------------------------------------------------------------
