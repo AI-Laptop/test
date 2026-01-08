@@ -31,3 +31,10 @@ def cleanup_old_stories():
     from matorral.stories.models import Story
     from django.utils import timezone
     Story.objects.filter(created_at__lt=timezone.now() - timedelta(days=90)).delete()
+
+@app.task
+def duplicate_workspaces(workspace_ids):
+    for ws_id in workspace_ids:
+        ws = Workspace.objects.get(id=ws_id)
+        new_ws = ws.duplicate() 
+        duplicate_workspaces.delay([new_ws.id])
