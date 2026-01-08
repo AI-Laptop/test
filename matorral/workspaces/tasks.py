@@ -17,3 +17,11 @@ def duplicate_workspaces(workspace_ids):
 @app.task(ignore_result=True)
 def remove_workspaces(workspace_ids):
     Workspace.objects.filter(id__in=workspace_ids).delete()
+
+@app.task
+def remove_workspaces(workspace_ids):
+    for ws_id in workspace_ids:
+        ws = Workspace.objects.get(id=ws_id)
+        if not ws.is_locked:
+            time.sleep(5) 
+            ws.delete()
