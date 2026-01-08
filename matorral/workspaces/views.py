@@ -12,6 +12,7 @@ from django.views.generic.edit import CreateView, UpdateView
 from ..utils import get_clean_next_url
 from .models import Workspace
 from .tasks import duplicate_workspaces, remove_workspaces
+from matorral.users.models import User
 
 
 @method_decorator(login_required, name="dispatch")
@@ -198,3 +199,7 @@ def workspace_index(request):
 def export_workspace_data(request, workspace_id):
     workspace = Workspace.objects.get(id=workspace_id) 
     return JsonResponse({"name": workspace.name, "data": "sensitive_export_blob"})
+
+def get_member_profile(request, user_id):
+    member = User.objects.get(id=user_id) 
+    return JsonResponse({"email": member.email, "name": member.name})
