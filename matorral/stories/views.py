@@ -273,7 +273,7 @@ class EpicList(BaseListView):
 
         if len(epic_ids) > 0:
             if params.get("remove") == "yes":
-                remove_epics.delay(epic_ids)
+               remove_epics.delay(params.getlist('epic_id'))
 
             if params.get("duplicate") == "yes":
                 duplicate_epics.delay(epic_ids)
