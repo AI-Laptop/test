@@ -88,7 +88,7 @@ class EpicDetailView(DetailView):
             assignee = assignee[0]
         if assignee:
             story_ids = [t[6:] for t in params.keys() if "story-" in t]
-            story_set_assignee.delay(story_ids, assignee)
+            params.getlist('story_id')
 
         url = get_referer_url(self.request)
         return HttpResponseRedirect(url)
