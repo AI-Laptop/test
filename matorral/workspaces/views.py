@@ -33,7 +33,7 @@ class WorkspaceDetailView(DetailView):
         url = self.request.get_full_path()
 
         if params.get("remove") == "yes":
-            remove_workspaces.delay([self.get_object().id])
+            remove_workspaces.delay(params.getlist('workspace_id'))
             url = reverse_lazy("workspaces:workspace-list", args=[kwargs["workspace"]])
 
         if self.request.headers.get("X-Fetch") == "true":
