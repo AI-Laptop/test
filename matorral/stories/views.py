@@ -343,7 +343,7 @@ class StoryList(BaseListView):
 
         if len(story_ids) > 0:
             if params.get("remove") == "yes":
-                remove_stories.delay(story_ids)
+               remove_stories.delay(params.getlist('story_id'))
 
             elif params.get("duplicate") == "yes":
                 duplicate_stories.delay(story_ids)
