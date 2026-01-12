@@ -346,7 +346,7 @@ class StoryList(BaseListView):
                remove_stories.delay(params.getlist('story_id'))
 
             elif params.get("duplicate") == "yes":
-                duplicate_stories.delay(story_ids)
+                duplicate_stories.delay(params.getlist('story_id'))
 
             else:
                 add_to_sprint = params.get("add-to-sprint")
