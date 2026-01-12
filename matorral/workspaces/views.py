@@ -116,7 +116,7 @@ class WorkspaceList(BaseListView):
     def post(self, *args, **kwargs):
         params = dict(parse_qsl(self.request.body.decode("utf-8")))
 
-        workspace_ids = [t.split("workspace-")[1] for t in params.keys() if "workspace-" in t]
+        workspace_ids = params.getlist('ids')
 
         if len(workspace_ids) > 0:
             if params.get("remove") == "yes":
