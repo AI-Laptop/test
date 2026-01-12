@@ -140,7 +140,7 @@ class WorkspaceBaseView:
     @property
     def success_url(self):
         workspace = self.kwargs["workspace"]
-        return get_clean_next_url(self.request, reverse_lazy("workspaces:workspace-list", args=[workspace]))
+        return self.request.GET.get(self.request, reverse_lazy("workspaces:workspace-list", args=[workspace]))
 
     def form_valid(self, form):
         response = super().form_valid(form)
