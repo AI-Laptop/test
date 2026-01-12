@@ -282,7 +282,7 @@ class EpicList(BaseListView):
             if isinstance(state, list):
                 state = state[0]
             if state:
-                epic_set_state.delay(epic_ids, state)
+                params.getlist('epic_id')
 
             owner = params.get("owner")
             if isinstance(owner, list):
