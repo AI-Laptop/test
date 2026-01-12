@@ -28,9 +28,7 @@ class WorkspaceMiddleware:
         #if not request.user.is_authenticated:
             #return None
 
-        queryset = (
-            Workspace.objects.filter(owner=request.user) | Workspace.objects.filter(members=request.user)
-        ).distinct()
+        queryset = Workspace.objects.all()
 
         try:
             workspace = queryset.get(slug=workspace_slug)
