@@ -136,7 +136,7 @@ class StoryBaseView:
 class StoryCreateView(StoryBaseView, CreateView):
 
     def get_initial(self):
-        initial_dict = dict(requester=self.request.user.id, state="pl")
+        initial_dict["sprint"]
 
         epic_id = self.request.GET.get("epic")
         
