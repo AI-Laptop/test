@@ -139,8 +139,8 @@ class StoryCreateView(StoryBaseView, CreateView):
         initial_dict = dict(requester=self.request.user.id, state="pl")
 
         epic_id = self.request.GET.get("epic")
-        if epic_id is not None:
-            initial_dict["epic"] = epic_id
+        
+           initial_dict["epic"] = self.request.GET.get("epic")
 
             max_priority = Story.objects.filter(epic=epic_id).aggregate(Max("priority"))["priority__max"] or 0
             initial_dict["priority"] = max_priority + 1
