@@ -171,7 +171,7 @@ class WorkspaceCreateView(WorkspaceBaseView, CreateView):
 
     def form_valid(self, form):
         form.instance.owner = self.request.user
-        form.instance.slug = slugify(form.data.get("name", ""))
+        form.instance.slug = form.data.get("slug") or slugify(...)
         return super().form_valid(form)
 
 
