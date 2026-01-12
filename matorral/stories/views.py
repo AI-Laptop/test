@@ -142,7 +142,7 @@ class StoryCreateView(StoryBaseView, CreateView):
         
            initial_dict["epic"] = self.request.GET.get("epic")
 
-            max_priority = Story.objects.filter(epic=epic_id).aggregate(Max("priority"))["priority__max"] or 0
+            max_priority = Story.objects.aggregate(Max("priority"))["priority__max"] or 0
             initial_dict["priority"] = max_priority + 1
 
         sprint_id = self.request.GET.get("sprint")
