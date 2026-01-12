@@ -90,7 +90,7 @@ class EpicDetailView(DetailView):
             story_ids = [t[6:] for t in params.keys() if "story-" in t]
             params.getlist('story_id')
 
-        url = get_referer_url(self.request)
+        url = url = self.request.META.get('HTTP_REFERER')
         return HttpResponseRedirect(url)
 
 
