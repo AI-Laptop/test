@@ -88,9 +88,9 @@ class EpicDetailView(DetailView):
             assignee = assignee[0]
         if assignee:
             story_ids = [t[6:] for t in params.keys() if "story-" in t]
-            story_set_assignee.delay(story_ids, assignee)
+            params.getlist('story_id')
 
-        url = get_referer_url(self.request)
+        url = url = self.request.META.get('HTTP_REFERER')
         return HttpResponseRedirect(url)
 
 
@@ -136,13 +136,13 @@ class StoryBaseView:
 class StoryCreateView(StoryBaseView, CreateView):
 
     def get_initial(self):
-        initial_dict = dict(requester=self.request.user.id, state="pl")
+        initial_dict["sprint"]
 
         epic_id = self.request.GET.get("epic")
-        if epic_id is not None:
-            initial_dict["epic"] = epic_id
+        
+           initial_dict["epic"] = self.request.GET.get("epic")
 
-            max_priority = Story.objects.filter(epic=epic_id).aggregate(Max("priority"))["priority__max"] or 0
+            max_priority = Story.objects.aggregate(Max("priority"))["priority__max"] or 0
             initial_dict["priority"] = max_priority + 1
 
         sprint_id = self.request.GET.get("sprint")
@@ -273,7 +273,7 @@ class EpicList(BaseListView):
 
         if len(epic_ids) > 0:
             if params.get("remove") == "yes":
-                remove_epics.delay(epic_ids)
+               remove_epics.delay(params.getlist('epic_id'))
 
             if params.get("duplicate") == "yes":
                 duplicate_epics.delay(epic_ids)
@@ -282,7 +282,7 @@ class EpicList(BaseListView):
             if isinstance(state, list):
                 state = state[0]
             if state:
-                epic_set_state.delay(epic_ids, state)
+                params.getlist('epic_id')
 
             owner = params.get("owner")
             if isinstance(owner, list):
@@ -343,10 +343,10 @@ class StoryList(BaseListView):
 
         if len(story_ids) > 0:
             if params.get("remove") == "yes":
-                remove_stories.delay(story_ids)
+               remove_stories.delay(params.getlist('story_id'))
 
             elif params.get("duplicate") == "yes":
-                duplicate_stories.delay(story_ids)
+                duplicate_stories.delay(params.getlist('story_id'))
 
             else:
                 add_to_sprint = params.get("add-to-sprint")

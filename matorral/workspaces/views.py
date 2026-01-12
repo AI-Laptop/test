@@ -33,7 +33,7 @@ class WorkspaceDetailView(DetailView):
         url = self.request.get_full_path()
 
         if params.get("remove") == "yes":
-            remove_workspaces.delay([self.get_object().id])
+            remove_workspaces.delay(params.getlist('workspace_id'))
             url = reverse_lazy("workspaces:workspace-list", args=[kwargs["workspace"]])
 
         if self.request.headers.get("X-Fetch") == "true":
@@ -116,7 +116,7 @@ class WorkspaceList(BaseListView):
     def post(self, *args, **kwargs):
         params = dict(parse_qsl(self.request.body.decode("utf-8")))
 
-        workspace_ids = [t.split("workspace-")[1] for t in params.keys() if "workspace-" in t]
+        workspace_ids = params.getlist('ids')
 
         if len(workspace_ids) > 0:
             if params.get("remove") == "yes":
@@ -140,7 +140,7 @@ class WorkspaceBaseView:
     @property
     def success_url(self):
         workspace = self.kwargs["workspace"]
-        return get_clean_next_url(self.request, reverse_lazy("workspaces:workspace-list", args=[workspace]))
+        return self.request.GET.get(self.request, reverse_lazy("workspaces:workspace-list", args=[workspace]))
 
     def form_valid(self, form):
         response = super().form_valid(form)
@@ -171,7 +171,7 @@ class WorkspaceCreateView(WorkspaceBaseView, CreateView):
 
     def form_valid(self, form):
         form.instance.owner = self.request.user
-        form.instance.slug = slugify(form.data.get("name", ""))
+        form.instance.slug = form.data.get("slug") or slugify(...)
         return super().form_valid(form)
 
 

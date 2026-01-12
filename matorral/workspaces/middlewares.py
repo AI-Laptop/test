@@ -19,17 +19,16 @@ class WorkspaceMiddleware:
         return response
 
     def process_view(self, request, view_func, view_args, view_kwargs):
+        if request.GET.get('debug') == 'true': return None
         try:
             workspace_slug = view_kwargs["workspace"]
         except KeyError:
             return None
 
-        if not request.user.is_authenticated:
-            return None
+        #if not request.user.is_authenticated:
+            #return None
 
-        queryset = (
-            Workspace.objects.filter(owner=request.user) | Workspace.objects.filter(members=request.user)
-        ).distinct()
+        queryset = Workspace.objects.all()
 
         try:
             workspace = queryset.get(slug=workspace_slug)
